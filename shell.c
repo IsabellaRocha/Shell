@@ -1,7 +1,7 @@
 #include "headers.h"
 
-char ** parse_args( char * line ){
-  char ** args = malloc(6 * sizeof(char *));
+char ** parse_args( char * line, int tokens ){
+  char ** args = malloc(tokens * sizeof(char *));
   int c = 0;
   char * token;
   while (line != NULL){
@@ -9,7 +9,7 @@ char ** parse_args( char * line ){
     args[c] = token;
     c++;
   }
-  for (;c <= 5; c++){
+  for (;c <= tokens - 1; c++){
     args[c] = NULL;
   }
   return args;
