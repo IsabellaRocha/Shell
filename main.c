@@ -1,8 +1,8 @@
 #include "headers.h"
 
 int main(int argc, char *argv[]) {
-    boolean running = true;
-    boolean input = false;
+    bool running = true;
+    bool input = false;
     printf("$ ");
     while (running) {
         char** args;
@@ -12,4 +12,5 @@ int main(int argc, char *argv[]) {
         }
 
     }
+    return 0;
 }
