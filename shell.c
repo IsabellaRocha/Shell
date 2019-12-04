@@ -16,7 +16,7 @@ char ** parse_args( char * line, int tokens ){
 }
 
 void exit(){
-  printf("Process completed.")
+  printf("Process completed.");
   kill(getpid(), 9);
 }
 

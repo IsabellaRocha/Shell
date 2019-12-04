@@ -10,7 +10,6 @@ int main(int argc, char *argv[]) {
             printf("$ ");
             input = false;
         }
-
     }
     return 0;
 }
