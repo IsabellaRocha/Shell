@@ -5,10 +5,11 @@ int main(int argc, char *argv[]) {
     boolean input = false;
     printf("$ ");
     while (running) {
-        char* args;
-        if(strlen(args) == 0 && input) {
+        char** args;
+        if(sizeof(args) && input) {
             printf("$ ");
             input = false;
         }
+
     }
 }

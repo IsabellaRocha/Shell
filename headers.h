@@ -8,3 +8,5 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+
+char ** parse_args( char * line, int tokens );
