@@ -14,3 +14,7 @@ char ** parse_args( char * line, int tokens ){
   }
   return args;
 }
+
+void exit(){
+  
+}
