@@ -10,6 +10,7 @@ int main() {
         args = parse_args(line, 10);
         if(strcmp(args[0], "exit") == 0){
             exit(0);
+            break;
         }
         execute(args);
     }
