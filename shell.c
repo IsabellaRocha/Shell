@@ -23,6 +23,13 @@ void cd(char * path){
   }
 }
 
-void execute(){
-
+void execute(char** args){
+    if(strcmp(args[0], "cd") == 0) {
+        cd(args[0]);
+    }
+    pid_t cPID;
+    cPID = fork();
+    if(cPID == 0) {
+        execvp(args[0], args);
+    }
 }
