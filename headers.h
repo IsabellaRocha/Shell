@@ -12,5 +12,5 @@
 #include <sys/wait.h>
 
 char ** parse_args( char * line, int tokens );
-void exit();
 void cd(char * path);
+void execute();

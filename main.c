@@ -7,7 +7,7 @@ int main() {
         printf("$ ");
         char** args;
         if(strcmp(args[0], "exit") == 0) {
-            exit();
+            exit(0);
         }
         fgets(line, 100, stdin);
         args = parse_args(line, 10);

@@ -15,14 +15,14 @@ char ** parse_args( char * line, int tokens ){
   return args;
 }
 
-void exit(){
-  printf("Process completed.");
-  kill(getpid(), 9);
-}
 
 void cd(char * path){
   int err = chdir(path);
   if (err == -1){
     printf("errno %d error: %s\n", errno, strerror(errno));
   }
+}
+
+void execute(){
+
 }
