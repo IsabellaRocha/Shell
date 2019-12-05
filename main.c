@@ -1,15 +1,17 @@
 #include "headers.h"
 
-int main(int argc, char *argv[]) {
-    bool running = true;
+int main() {
     bool input = false;
-    printf("$ ");
-    while (running) {
+    char * line;
+    while (true) {
+        printf("$ ");
         char** args;
-        if(sizeof(args) && input) {
-            printf("$ ");
-            input = false;
+        if(strcmp(args[0], "exit") == 0) {
+            exit();
         }
+        fgets(line, 100, stdin);
+        args = parse_args(line, 10);
+        execute(args);
     }
     return 0;
 }
