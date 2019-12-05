@@ -31,5 +31,9 @@ void execute(char** args){
     cPID = fork();
     if(cPID == 0) {
         execvp(args[0], args);
+        exit(0);
+    }
+    else {
+        wait(&cPID);
     }
 }
