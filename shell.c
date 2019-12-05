@@ -40,4 +40,5 @@ void execute(char** args){
     else {
         wait(&cPID);
     }
+    free(args);
 }
