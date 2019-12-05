@@ -24,6 +24,10 @@ void cd(char * path){
 }
 
 void execute(char** args){
+    if(strcmp(args[0], "exit") == 0){
+        exit(0);
+        //break;
+    }
     if(strcmp(args[0], "cd") == 0) {
         cd(args[1]);
     }
