@@ -11,6 +11,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-char ** parse_args( char * line, int tokens );
+char ** parse_args( char * line, char * delimiter );
 void cd(char * path);
-void execute();
+void execute(char** args);

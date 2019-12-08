@@ -2,7 +2,7 @@
 
 int main() {
     char line[50];
-    while (strcmp(args[0], "exit") != 0) {
+    while (strcmp(line, "exit") != 0) {
         printf("$ ");
         char** args;
         fgets(line, 100, stdin);
