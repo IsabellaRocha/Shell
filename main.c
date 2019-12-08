@@ -7,9 +7,7 @@ int main() {
         char** args;
         fgets(line, 100, stdin);
         char * checker;
-        if ((checker = strchr(line, '\n')) != NULL) {
-          *checker = '\0';
-        }
+        line[strlen(line) - 1] = 0;
         args = parse_args(line, ";"); //Take into account multple arguments at once
         int idx = 0;
         while (strcmp(args[idx], "exit") != 0 && args[idx] != NULL) {
