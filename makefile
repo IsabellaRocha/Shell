@@ -19,3 +19,4 @@ gdb:
 clean:
 	rm *.o
 	rm *.exe
+	rm *.exe.stackdump

@@ -21,6 +21,8 @@ void cd(char * path){
   if (err == -1){
     printf("errno %d error: %s\n", errno, strerror(errno));
   }
+  char * fullPath = getcwd(path, 50);
+  printf("%s\n", fullPath);
 }
 
 void execute(char** args){
