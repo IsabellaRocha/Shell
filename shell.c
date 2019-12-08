@@ -26,21 +26,21 @@ void cd(char * path){
 }
 
 void execute(char** args){
-    if(strcmp(args[0], "exit") == 0){
-        exit(0);
-        //break;
-    }
     if(strcmp(args[0], "cd") == 0) {
         cd(args[1]);
     }
-    pid_t cPID;
-    cPID = fork();
-    if(cPID == 0) {
-        execvp(args[0], args);
-        exit(0);
-    }
     else {
-        wait(&cPID);
+        pid_t cPID;
+        cPID = fork();
+        if(cPID == 0) {
+            execvp(args[0], args);
+            if(errno != 0) {
+                printf("Error: %s", strerror(errno));
+                kill(getpid(), SIGTERM);
+            }
+        }
+        else {
+            wait(NULL);
+        }
     }
-    free(args);
 }
