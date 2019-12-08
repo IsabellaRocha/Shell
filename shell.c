@@ -1,15 +1,15 @@
 #include "headers.h"
 
-char ** parse_args( char * line, int tokens ){
-  char ** args = malloc(tokens * sizeof(char *));
+char ** parse_args( char * line, char * delimiter ){
+  char ** args = malloc(10 * sizeof(char *));
   int c = 0;
   char * token;
   while (line != NULL){
-    token = strsep(&line, " ");
+    token = strsep(&line, delimiter);
     args[c] = token;
     c++;
   }
-  for (;c <= tokens - 1; c++){
+  for (;c <= 10 - 1; c++){
     args[c] = NULL;
   }
   return args;

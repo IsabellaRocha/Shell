@@ -1,9 +1,8 @@
 #include "headers.h"
 
 int main() {
-    bool input = false;
     char * line;
-    while (true) {
+    while (strcmp(args[0], "exit") != 0) {
         printf("$ ");
         char** args;
         fgets(line, 100, stdin);
@@ -11,12 +10,13 @@ int main() {
         if ((checker = strchr(line, '\n')) != NULL) {
           *checker = '\0';
         }
-        args = parse_args(line, 10);
-        if(strcmp(args[0], "exit") == 0){
-            exit(0);
-            break;
+        args = parse_args(line, ";"); //Take into account multple arguments at once
+        int idx = 0;
+        while (strcmp(args[idx], "exit") != 0 && args[idx] != NULL) {
+            char **args2 = parse_args(args[idx], " ");
+            execute(args);
+            idx++;
         }
-        execute(args);
     }
     return 0;
 }
