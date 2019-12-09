@@ -26,6 +26,7 @@ void cd(char * path){
 }
 
 void execute(char** args){
+    int status;
     if(strcmp(args[0], "cd") == 0) {
         cd(args[1]);
     }
@@ -38,9 +39,11 @@ void execute(char** args){
                 printf("Error: %s", strerror(errno));
                 kill(getpid(), SIGTERM);
             }
+            printf("sup");
+            exit(0);
         }
         else {
-            wait(NULL);
+            wait(&status);
         }
     }
 }
