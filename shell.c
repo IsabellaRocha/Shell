@@ -31,16 +31,12 @@ void execute(char** args){
         cd(args[1]);
     }
     else {
-        pid_t cPID;
-        cPID = fork();
-        if(cPID == 0) {
+        if(fork() == 0) {
             execvp(args[0], args);
             if(errno != 0) {
-                printf("Error: %s", strerror(errno));
+                printf("Error: %s\n", strerror(errno));
                 kill(getpid(), SIGTERM);
             }
-            printf("sup");
-            exit(0);
         }
         else {
             wait(&status);
