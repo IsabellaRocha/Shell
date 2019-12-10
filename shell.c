@@ -1,28 +1,60 @@
 #include "headers.h"
 
 char ** parse_args( char * line, char * delimiter ){
-  char ** args = malloc(10 * sizeof(char *));
-  int c = 0;
-  char * token;
-  while (line != NULL){
-    token = strsep(&line, delimiter);
-    args[c] = token;
-    c++;
-  }
-  for (;c <= 10 - 1; c++){
-    args[c] = NULL;
-  }
-  return args;
+    char arg[50];
+    char newLine[50];
+    strcpy(arg, line);
+    int idx = 0;
+    while(arg[idx] == ' ') {
+        idx++;
+    }
+    int cur = 0;
+    bool space = false;
+    while(idx < strlen(line)) {
+        if(arg[idx] != ' ') {
+            newLine[cur] = arg[idx];
+            space = false;
+            cur++;
+            idx++;
+        }
+        if(arg[idx] == ' ' && !space) {
+            newLine[cur] = arg[idx];
+            idx++;
+            cur++;
+            space = true;
+        }
+        if(arg[idx] == ' ' && space) {
+            idx++;
+        }
+        newLine[cur] = arg[idx];
+        idx++;
+        cur++;
+    }
+    char * parse = malloc(50 * sizeof(char));
+    strcpy(parse, newLine);
+    char ** args = malloc(10 * sizeof(char *));
+    int c = 0;
+    char * token;
+    while (parse != NULL){
+        token = strsep(&parse, delimiter);
+        args[c] = token;
+        c++;
+    }
+    for (;c <= 10 - 1; c++){
+        args[c] = NULL;
+    }
+    free(parse);
+    return args;
 }
 
 
 void cd(char * path){
-  int err = chdir(path);
-  if (err == -1){
-    printf("errno %d error: %s\n", errno, strerror(errno));
-  }
-  char * fullPath = getcwd(path, 50);
-  printf("%s\n", fullPath);
+    int err = chdir(path);
+    if (err == -1){
+        printf("errno %d error: %s\n", errno, strerror(errno));
+    }
+    char * fullPath = getcwd(path, 50);
+    printf("%s\n", fullPath);
 }
 
 void execute(char** args){

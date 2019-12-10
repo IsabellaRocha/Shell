@@ -15,8 +15,10 @@ int main() {
         while (args[idx] != NULL && strcmp(args[idx], "exit") != 0) {
             char **args2 = parse_args(args[idx], " ");
             execute(args2);
+            free(args2);
             idx++;
         }
+        free(args);
     }
     return 0;
 }
