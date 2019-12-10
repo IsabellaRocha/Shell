@@ -30,6 +30,9 @@ char ** parse_args( char * line, char * delimiter ){
         idx++;
         cur++;
     }
+    if(cur > 0 && newLine[cur - 1] == ' ') {
+        newLine[cur - 1] = '\0';
+    }
     char * parse = malloc(50 * sizeof(char));
     strcpy(parse, newLine);
     char ** args = malloc(10 * sizeof(char *));
