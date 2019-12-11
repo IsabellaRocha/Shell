@@ -10,12 +10,6 @@ shell.o: shell.c headers.h
 run:
 	./program
 
-check: main.c shell.c headers.h
-	gcc -g main.c shell.c
-
-gdb:
-	gdb program.exe
-
 clean:
 	rm *.o
 	rm *.exe
