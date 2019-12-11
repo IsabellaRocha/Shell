@@ -12,11 +12,13 @@ int main() {
         }
         args = parse_args(line, ";"); //Take into account multple arguments at once
         int idx = 0;
-        while (strcmp(args[idx], "exit") != 0 && args[idx] != NULL) {
+        while (args[idx] != NULL && strcmp(args[idx], "exit") != 0) {
             char **args2 = parse_args(args[idx], " ");
             execute(args2);
+            free(args2);
             idx++;
         }
+        free(args);
     }
     return 0;
 }
