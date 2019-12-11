@@ -44,10 +44,10 @@ char * extraSpace(char * line) {
             cur++;
         }
     }
-    if(cur > 0 && newLine[cur - 1] == ' ') {
+    if(cur > 0 && newLine[cur - 1] == ' ') { //In case there's a space after the last charcter
         newLine[cur - 1] = '\0';
     }
-    newLine[cur] = '\0';
+    newLine[cur] = '\0'; //Null to terminate execvp
     char * parse = malloc(50 * sizeof(char));
     strcpy(parse, newLine);
     return parse;
