@@ -12,6 +12,7 @@
 #include <sys/wait.h>
 
 char ** parse_args( char * line, char * delimiter );
+char * extraSpace(char * line);
 void cd(char * path);
 void execute(char** args);
 int redirect_stdout(char * filename);

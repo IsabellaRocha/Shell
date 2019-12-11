@@ -1,40 +1,7 @@
 #include "headers.h"
 
 char ** parse_args( char * line, char * delimiter ){
-    char arg[50];
-    char newLine[50];
-    strcpy(arg, line);
-    int idx = 0;
-    while(arg[idx] == ' ') {
-        idx++;
-    }
-    int cur = 0;
-    bool space = false;
-    while(idx < strlen(line)) {
-        if(arg[idx] != ' ') {
-            newLine[cur] = arg[idx];
-            space = false;
-            cur++;
-            idx++;
-        }
-        if(arg[idx] == ' ' && !space) {
-            newLine[cur] = arg[idx];
-            idx++;
-            cur++;
-            space = true;
-        }
-        if(arg[idx] == ' ' && space) {
-            idx++;
-        }
-        newLine[cur] = arg[idx];
-        idx++;
-        cur++;
-    }
-    if(cur > 0 && newLine[cur - 1] == ' ') {
-        newLine[cur - 1] = '\0';
-    }
-    char * parse = malloc(50 * sizeof(char));
-    strcpy(parse, newLine);
+    char * parse = extraSpace(line);
     char ** args = malloc(10 * sizeof(char *));
     int c = 0;
     char * token;
@@ -50,6 +17,43 @@ char ** parse_args( char * line, char * delimiter ){
     return args;
 }
 
+char * extraSpace(char * line) {
+    char arg[50];
+    char newLine[50];
+    strcpy(arg, line);
+    int idx = 0;
+    int cur = 0;
+    bool space = false;
+    while(idx < strlen(line) && arg[idx] == ' ') { //Get rid of leading spaces
+        idx++;
+    }
+    while(idx < strlen(line)) {
+        if(arg[idx] != ' ') {
+            space = false;
+            newLine[cur] = arg[idx];
+            cur++;
+            idx++;
+        }
+        if(arg[idx] == ' '){
+            if(space) {
+                idx++;
+            }
+            if(!space) {
+                space = true;
+                newLine[cur] = arg[idx];
+                idx++;
+                cur++;
+            }
+        }
+    }
+    if(cur > 0 && newLine[cur - 1] == ' ') {
+        newLine[cur - 1] = '\0';
+    }
+    newLine[cur] = '\0';
+    char * parse = malloc(50 * sizeof(char));
+    strcpy(parse, newLine);
+    return parse;
+}
 int redirect_stdout(char * filename){
   int fd = open(filename, O_WRONLY);
   int backup = dup(STDOUT_FILENO);
