@@ -34,16 +34,14 @@ char * extraSpace(char * line) {
             cur++;
             idx++;
         }
-        if(arg[idx] == ' '){
-            if(space) {
-                idx++;
-            }
-            if(!space) {
-                space = true;
-                newLine[cur] = arg[idx];
-                idx++;
-                cur++;
-            }
+        if(arg[idx] == ' ' && space){
+            idx++;
+        }
+        if(arg[idx] == ' ' && !space) {
+            space = true;
+            newLine[cur] = arg[idx];
+            idx++;
+            cur++;
         }
     }
     if(cur > 0 && newLine[cur - 1] == ' ') {
