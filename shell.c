@@ -1,23 +1,6 @@
 #include "headers.h"
 
 char ** parse_args( char * line, char * delimiter ){
-    char * parse = extraSpace(line);
-    char ** args = malloc(10 * sizeof(char *));
-    int c = 0;
-    char * token;
-    while (parse != NULL){
-        token = strsep(&parse, delimiter);
-        args[c] = token;
-        c++;
-    }
-    for (;c <= 10 - 1; c++){
-        args[c] = NULL;
-    }
-    free(parse);
-    return args;
-}
-
-char * extraSpace(char * line) {
     char arg[50];
     char newLine[50];
     strcpy(arg, line);
@@ -50,8 +33,21 @@ char * extraSpace(char * line) {
     newLine[cur] = '\0'; //Null to terminate execvp
     char * parse = malloc(50 * sizeof(char));
     strcpy(parse, newLine);
-    return parse;
+    char ** args = malloc(10 * sizeof(char *));
+    int c = 0;
+    char * token;
+    while (parse != NULL){
+        token = strsep(&parse, delimiter);
+        args[c] = token;
+        c++;
+    }
+    for (;c <= 10 - 1; c++){
+        args[c] = NULL;
+    }
+    free(parse);
+    return args;
 }
+
 int redirect_stdout(char * filename){
   int fd = open(filename, O_WRONLY);
   int backup = dup(STDOUT_FILENO);
