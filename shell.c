@@ -102,16 +102,6 @@ void execute(char** args){
 
     else {
         if(fork() == 0) {
-            int c = 0;
-            bool p = false;
-            for(; args[c] != NULL; c++) {
-                if(strcmp(args[c], "|") == 0) {
-                    p = true;
-                }
-            }
-            if(p) {
-                pip(args);
-            }
         redirect(args);
             execvp(args[0], args);
             if(errno != 0) {

@@ -13,6 +13,10 @@ int main() {
         args = parse_args(line, ";"); //Take into account multple arguments at once
         int idx = 0;
         while (args[idx] != NULL && strcmp(args[idx], "exit") != 0) {
+            char ** p = parse_args(args[idx], "|");
+            if(p[1]) {
+                pip(args);
+            }
             char **args2 = parse_args(args[idx], " ");
             execute(args2);
             free(args2);
