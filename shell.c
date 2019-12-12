@@ -65,18 +65,27 @@ void redirect(char ** args) {
       for (; args[c] != NULL; c++){
         if (strcmp(args[c], ">") == 0){
             fd = open(args[c + 1], O_CREAT|O_WRONLY, 0744);  //Granting read and write permissions
+            if (fd < 0){
+              printf("errno %d error: %s\n", errno, strerror(errno));
+            }
             backup = dup(STDOUT_FILENO);
             dup2(fd, STDOUT_FILENO);
             close(fd);
         }
         if (strcmp(args[c], "<") == 0){
             fd = open(args[c + 1], O_RDONLY, 0);
+            if (fd < 0){
+              printf("errno %d error: %s\n", errno, strerror(errno));
+            }
             backup = dup(STDIN_FILENO);
             dup2(fd, STDIN_FILENO);
             close(fd);
         }
         if (strcmp(args[c], ">>") == 0){
             fd = open(args[c + 1], O_CREAT|O_APPEND, 0744);
+            if (fd < 0){
+              printf("errno %d error: %s\n", errno, strerror(errno));
+            }
             backup = dup(0);
             dup2(fd, 0);
             close(fd);
