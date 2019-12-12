@@ -14,6 +14,5 @@
 char ** parse_args( char * line, char * delimiter );
 void cd(char * path);
 void execute(char** args);
-int redirect_stdout(char * filename);
-int redirect_stdin(char * filename);
-int redirect_stdout_append(char * filename);
+void redirect(char** args);
+void pip(char ** args);
