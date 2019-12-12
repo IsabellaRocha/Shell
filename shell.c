@@ -87,40 +87,38 @@ void execute(char** args){
 
     else {
         if(fork() == 0) {
-          /*
-          bool fileout = false;
-          bool filein = false;
-          int fdin;
-          int fdout;
+
+    //      bool fileout = false;
+//          bool filein = false;
+          int fd;
+          int backup;
             int c = 0;
             for (; c < 10; c++){
               if (strcmp(args[c], ">") == 0){
-                fdout = redirect_stdout(args[c+1]);
-                fileout = true;
+                  fd = open(args[c + 1], O_WRONLY);
+                  backup = dup(STDOUT_FILENO);
+                  dup2(fd, STDOUT_FILENO);
+                  close(fd);
               }
               if (strcmp(args[c], "<") == 0){
-                fdin = redirect_stdin(args[c+1]);
-                filein = true;
+                  fd = open(args[c + 1], O_RDONLY);
+                  backup = dup(STDIN_FILENO);
+                  dup2(fd, STDIN_FILENO);
+                  close(fd);
               }
               if (strcmp(args[c], ">>") == 0){
-                fdout = redirect_stdout_append(args[c+1]);
-                fileout = true;
+                  fd = open(args[c + 1], O_APPEND);
+                  backup = dup(0);
+                  dup2(fd, 0);
+                  close(fd);
               }
             }
-            */
+
             execvp(args[0], args);
             if(errno != 0) {
                 printf("Error: %s\n", strerror(errno));
                 kill(getpid(), SIGTERM);
             }
-            /*
-            if (fileout){
-              close(fdout);
-            }
-            if (filein){
-              close(fdin);
-            }
-            */
         }
         else {
             wait(&status);
