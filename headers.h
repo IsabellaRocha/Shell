@@ -17,3 +17,4 @@ void execute(char** args);
 int redirect_stdout(char * filename);
 int redirect_stdin(char * filename);
 int redirect_stdout_append(char * filename);
+void redirect(char** args);

@@ -48,28 +48,6 @@ char ** parse_args( char * line, char * delimiter ){
     return args;
 }
 
-int redirect_stdout(char * filename){
-  int fd = open(filename, O_WRONLY);
-  int backup = dup(STDOUT_FILENO);
-  dup2(fd, STDOUT_FILENO);
-  return fd;
-}
-
-int redirect_stdin(char * filename){
-  int fd = open(filename, O_RDONLY);
-  int backup = dup(STDIN_FILENO);
-  dup2(fd, STDIN_FILENO);
-  return fd;
-}
-
-int redirect_stdout_append(char * filename){
-  int fd = open(filename, O_APPEND);
-  int backup = dup(0);
-  dup2(fd, 0);
-  return fd;
-}
-
-
 void cd(char * path){
     int err = chdir(path);
     if (err == -1){
@@ -79,6 +57,34 @@ void cd(char * path){
     printf("%s\n", fullPath);
 }
 
+void redirect(char ** args) {
+    int fd;
+    int backup;
+      int c = 0;
+      for (; args[c] != NULL; c++){
+        if (strcmp(args[c], ">") == 0){
+            args[c] = "\0";
+            fd = open(args[c + 1], O_WRONLY);
+            backup = dup(STDOUT_FILENO);
+            dup2(fd, STDOUT_FILENO);
+            close(fd);
+        }
+        if (strcmp(args[c], "<") == 0){
+            args[c] = "\0";
+            fd = open(args[c + 1], O_RDONLY);
+            backup = dup(STDIN_FILENO);
+            dup2(fd, STDIN_FILENO);
+            close(fd);
+        }
+        if (strcmp(args[c], ">>") == 0){
+            args[c] = "\0";
+            fd = open(args[c + 1], O_APPEND);
+            backup = dup(0);
+            dup2(fd, 0);
+            close(fd);
+        }
+      }
+}
 void execute(char** args){
     int status;
     if(strcmp(args[0], "cd") == 0) {
@@ -90,30 +96,7 @@ void execute(char** args){
 
     //      bool fileout = false;
 //          bool filein = false;
-          int fd;
-          int backup;
-            int c = 0;
-            for (; c < 10; c++){
-              if (strcmp(args[c], ">") == 0){
-                  fd = open(args[c + 1], O_WRONLY);
-                  backup = dup(STDOUT_FILENO);
-                  dup2(fd, STDOUT_FILENO);
-                  close(fd);
-              }
-              if (strcmp(args[c], "<") == 0){
-                  fd = open(args[c + 1], O_RDONLY);
-                  backup = dup(STDIN_FILENO);
-                  dup2(fd, STDIN_FILENO);
-                  close(fd);
-              }
-              if (strcmp(args[c], ">>") == 0){
-                  fd = open(args[c + 1], O_APPEND);
-                  backup = dup(0);
-                  dup2(fd, 0);
-                  close(fd);
-              }
-            }
-
+        redirect(args);
             execvp(args[0], args);
             if(errno != 0) {
                 printf("Error: %s\n", strerror(errno));
