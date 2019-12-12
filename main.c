@@ -15,7 +15,7 @@ int main() {
         while (args[idx] != NULL && strcmp(args[idx], "exit") != 0) {
             char ** p = parse_args(args[idx], "|");
             if(p[1]) {
-                pip(args);
+                pip(p);
             }
             char **args2 = parse_args(args[idx], " ");
             execute(args2);
