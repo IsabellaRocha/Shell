@@ -64,32 +64,36 @@ void redirect(char ** args) {
       int c = 0;
       for (; args[c] != NULL; c++){
         if (strcmp(args[c], ">") == 0){
-            strcpy(input, args[c + 1]);
-            args[c] = "\0";
-            fd = open(input, O_CREAT|O_WRONLY, 0744);  //Granting read and write permissions
-
+            fd = open(args[c + 1], O_CREAT|O_WRONLY, 0744);  //Granting read and write permissions
             backup = dup(STDOUT_FILENO);
             dup2(fd, STDOUT_FILENO);
             close(fd);
         }
         if (strcmp(args[c], "<") == 0){
-            strcpy(input, args[c + 1]);
-            args[c] = "\0";
-            fd = open(input, O_RDONLY, 0);
+            fd = open(args[c + 1], O_RDONLY, 0);
             backup = dup(STDIN_FILENO);
             dup2(fd, STDIN_FILENO);
             close(fd);
         }
         if (strcmp(args[c], ">>") == 0){
-            strcpy(input, args[c + 1]);
-            args[c] = "\0";
-            fd = open(input, O_CREAT|O_APPEND, 0744);
+            fd = open(args[c + 1], O_CREAT|O_APPEND, 0744);
             backup = dup(0);
             dup2(fd, 0);
             close(fd);
         }
       }
 }
+
+void pip(char ** args) {
+    FILE *in = popen(args[0], "r");
+    FILE *out = popen(args[1], "w");
+    char str[50];
+    while(fgets(str, 50, in)) {
+        fputs(str, out);
+    }
+    pclose(in); pclose(out);
+}
+
 void execute(char** args){
     int status;
     if(strcmp(args[0], "cd") == 0) {
@@ -98,6 +102,16 @@ void execute(char** args){
 
     else {
         if(fork() == 0) {
+            int c = 0;
+            bool p = false;
+            for(; args[c] != NULL; c++) {
+                if(strcmp(args[c], "|") == 0) {
+                    p = true;
+                }
+            }
+            if(p) {
+                pip(args);
+            }
         redirect(args);
             execvp(args[0], args);
             if(errno != 0) {
