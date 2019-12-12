@@ -17,10 +17,13 @@ int main() {
             if(p[1]) {
                 pip(p);
             }
-            char **args2 = parse_args(args[idx], " ");
-            execute(args2);
-            free(args2);
-            idx++;
+	    else {
+                char **args2 = parse_args(args[idx], " ");
+                execute(args2);
+                free(args2);
+            }
+	    idx++;
+	    free(p);
         }
         free(args);
     }
