@@ -73,7 +73,7 @@ void redirect(char ** args) {
             close(fd);
         }
         if (strcmp(args[c], "<") == 0){
-            fd = open(args[c + 1], O_RDONLY, 0);
+            fd = open(args[c + 1], O_RDONLY, 0444);
             if (fd < 0){
               printf("errno %d error: %s\n", errno, strerror(errno));
             }
