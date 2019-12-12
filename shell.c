@@ -64,7 +64,7 @@ void redirect(char ** args) {
       for (; args[c] != NULL; c++){
         if (strcmp(args[c], ">") == 0){
             args[c] = "\0";
-            fd = open(args[c + 1], O_CREAT|O_WRONLY);
+            fd = open(args[c + 1], O_CREAT|O_WRONLY, 0744);
             backup = dup(STDOUT_FILENO);
             dup2(fd, STDOUT_FILENO);
             close(fd);
@@ -78,7 +78,7 @@ void redirect(char ** args) {
         }
         if (strcmp(args[c], ">>") == 0){
             args[c] = "\0";
-            fd = open(args[c + 1], O_CREAT|O_APPEND);
+            fd = open(args[c + 1], O_CREAT|O_APPEND, 0744);
             backup = dup(0);
             dup2(fd, 0);
             close(fd);
