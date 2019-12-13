@@ -1,38 +1,7 @@
 #include "headers.h"
 
 char ** parse_args( char * line, char * delimiter ){
-    char arg[50];
-    char newLine[50];
-    strcpy(arg, line);
-    int idx = 0;
-    int cur = 0;
-    bool space = false;
-    while(idx < strlen(line) && arg[idx] == ' ') { //Get rid of leading spaces
-        idx++;
-    }
-    while(idx < strlen(line)) {
-        if(arg[idx] != ' ') {
-            space = false;
-            newLine[cur] = arg[idx];
-            cur++;
-            idx++;
-        }
-        if(arg[idx] == ' ' && space){
-            idx++;
-        }
-        if(arg[idx] == ' ' && !space) {
-            space = true;
-            newLine[cur] = arg[idx];
-            idx++;
-            cur++;
-        }
-    }
-    if(cur > 0 && newLine[cur - 1] == ' ') { //In case there's a space after the last charcter
-        newLine[cur - 1] = '\0';
-    }
-    newLine[cur] = '\0'; //Null to terminate execvp
-    char * parse = malloc(50 * sizeof(char));
-    strcpy(parse, newLine);
+    char * parse = removeSpace(line);
     char ** args = malloc(10 * sizeof(char *));
     int c = 0;
     char * token;
@@ -48,6 +17,42 @@ char ** parse_args( char * line, char * delimiter ){
     return args;
 }
 
+char * removeSpace(char * line) {
+  char arg[50];
+  char newLine[50];
+  strcpy(arg, line);
+  int idx = 0;
+  int cur = 0;
+  bool space = false;
+  while(idx < strlen(line) && arg[idx] == ' ') { //Get rid of leading spaces
+      idx++;
+  }
+  while(idx < strlen(line)) {
+      if(arg[idx] != ' ') {
+          space = false;
+          newLine[cur] = arg[idx];
+          cur++;
+          idx++;
+      }
+      if(arg[idx] == ' ' && space){
+          idx++;
+      }
+      if(arg[idx] == ' ' && !space) {
+          space = true;
+          newLine[cur] = arg[idx];
+          idx++;
+          cur++;
+      }
+  }
+  if(cur > 0 && newLine[cur - 1] == ' ') { //In case there's a space after the last charcter
+      newLine[cur - 1] = '\0';
+  }
+  newLine[cur] = '\0'; //Null to terminate execvp
+  char * parse = malloc(50 * sizeof(char));
+  strcpy(parse, newLine);
+  return parse;
+}
+
 void cd(char * path){
     int err = chdir(path);
     if (err == -1){
@@ -60,7 +65,6 @@ void cd(char * path){
 void redirect(char ** args) {
     int fd;
     int backup;
-    char input[50];
       int c = 0;
       for (; args[c] != NULL; c++){
         if (strcmp(args[c], ">") == 0){
@@ -82,7 +86,7 @@ void redirect(char ** args) {
             close(fd);
         }
         if (strcmp(args[c], ">>") == 0){
-            fd = open(args[c + 1], O_CREAT|O_APPEND, 0744);
+            fd = open(args[c + 1], O_APPEND, 0744);
             if (fd < 0){
               printf("errno %d error: %s\n", errno, strerror(errno));
             }

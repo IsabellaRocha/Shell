@@ -16,3 +16,4 @@ void cd(char * path);
 void execute(char** args);
 void redirect(char** args);
 void pip(char ** args);
+char * removeSpace(char * line);
