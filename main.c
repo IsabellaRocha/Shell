@@ -3,14 +3,14 @@
 int main() {
     char line[50];
     while (strcmp(line, "exit") != 0) {
-        printf("\n$ ");
+        printf("$ ");
         char** args;
         fgets(line, 50, stdin);
         char * checker;
         if ((checker = strchr(line, '\n')) != NULL) {
           *checker = '\0';
         }
-        args = parse_args(line, ";"); //Take into account multple arguments at once
+        args = parse_args(line, ";"); //Take into account multiple arguments at once
         int idx = 0;
         while (args[idx] != NULL && strcmp(args[idx], "exit") != 0) {
             char ** p = parse_args(args[idx], "|");
