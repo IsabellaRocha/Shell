@@ -51,6 +51,7 @@ shell.c - handles execution.
       Does not return anything, simply executes the commands
 
 Every function header:
+
   char ** parse_args( char * line, char * delimiter );
   void cd(char * path);
   void execute(char** args);
