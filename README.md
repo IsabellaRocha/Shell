@@ -52,9 +52,9 @@ shell.c - handles execution.
 
 Every function header:
 
-  char ** parse_args( char * line, char * delimiter );
-  void cd(char * path);
-  void execute(char** args);
-  void redirect(char** args);
-  void pip(char ** args);
-  char * removeSpace(char * line);
+    char ** parse_args( char * line, char * delimiter );
+    void cd(char * path);
+    void execute(char** args);
+    void redirect(char** args);
+    void pip(char ** args);
+    char * removeSpace(char * line);
