@@ -18,6 +18,7 @@ Files and function headers:
 main.c - handles taking in inputs using fgets() and executing commands.
 
 shell.c - handles execution.
+
     char** parse_args()
       Inputs: char * line -> The input string which we are parsing over
       char * delimiter -> The string of characters we are looking for in line
