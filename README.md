@@ -1,4 +1,4 @@
-Shell assignment by Isabella Rocha and Claire Tempelman
+#Shell assignment by Isabella Rocha and Claire Tempelman
 
 Our shell implements:
 - Basic commands using execvp
@@ -7,17 +7,17 @@ Our shell implements:
 - Basic pipes using popen().
 
 Features we were unsuccessful at implementing:
-Pressing up arrow for history.
+- Pressing up arrow for history.
 
 Bugs:
-If one of the words in an input is over 50 characters, the shell throws an error (but it still runs).
-If you just input a blank command, the shell throws an error (but it still runs).
-Functions all work on linux, but may have different results in MacOS or Windows.
+- If one of the words in an input is over 50 characters, the shell throws an error (but it still runs).
+- If you just input a blank command, the shell throws an error (but it still runs).
+- Functions all work on linux, but may have different results in MacOS or Windows.
 
 Files and function headers:
-main.c - handles taking in inputs using fgets() and executing commands.
+- main.c - handles taking in inputs using fgets() and executing commands.
 
-shell.c - handles execution.
+- shell.c - handles execution.
 
     char** parse_args()
       Inputs: char * line -> The input string which we are parsing over
