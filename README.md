@@ -20,7 +20,7 @@ Files and function headers:
 - shell.c - handles execution.
 
     char** parse_args()
-      Inputs: char * line -> The input string which we are parsing over
+      Inputs: char * line -> The input string which we are parsing over\
       char * delimiter -> The string of characters we are looking for in line
       Every time a delimiter is found in line, a new token is created and added to the array of arguments
       This function returns an array of arguments
