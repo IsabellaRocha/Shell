@@ -92,7 +92,8 @@ Does not return anything, only modifies the file table
 void redirect(char ** args) {
     int fd;
     int c = 0;
-    char input[50];
+    char str1[50];
+    char str2[50]; //In case there's > and < in the same line
     bool in = false;
     bool out = false;
     bool out2 = false;
@@ -100,46 +101,46 @@ void redirect(char ** args) {
     for (; args[c] != NULL; c++){
         if (strcmp(args[c], ">") == 0){
             args[c] = NULL;
-            strcpy(input, args[c + 1]);
+            strcpy(str2, args[c + 1]);
             out = true;
         }
-        if (strcmp(args[c], "<") == 0){
+        else if (strcmp(args[c], "<") == 0){ //Need else or else you're checking against null
             args[c] = NULL;
-            strcpy(input, args[c + 1]);
+            strcpy(str1, args[c + 1]);
             in = true;
         }
-        if (strcmp(args[c], ">>") == 0){
+        else if (strcmp(args[c], ">>") == 0){
             args[c] = NULL;
-            strcpy(input, args[c + 1]);
+            strcpy(str2, args[c + 1]);
             out2 = true;
         }
-        if (in) {
-            fd = open(input, O_RDONLY, 0444);
-            if (fd < 0){
-                printf("errno %d error: %s\n", errno, strerror(errno));
-            }
-            backup = dup(STDIN_FILENO);
-            dup2(fd, STDIN_FILENO);
-            close(fd);
+    }
+    if (in) {
+        fd = open(str1, O_RDONLY, 0444);
+        if (fd < 0){
+            printf("errno %d error: %s\n", errno, strerror(errno));
         }
-        if (out) {
-            fd = open(input, O_CREAT|O_WRONLY, 0744);
-            if (fd < 0){
-                printf("errno %d error: %s\n", errno, strerror(errno));
-            }
-            backup = dup(STDIN_FILENO);
-            dup2(fd, STDIN_FILENO);
-            close(fd);
+        backup = dup(STDIN_FILENO);
+        dup2(fd, STDIN_FILENO);
+        close(fd);
+    }
+    if (out) {
+        fd = open(str2, O_CREAT|O_WRONLY, 0744);
+        if (fd < 0){
+            printf("errno %d error: %s\n", errno, strerror(errno));
         }
-        if (out2) {
-            fd = open(input, O_APPEND, 0744);
-            if (fd < 0){
-                printf("errno %d error: %s\n", errno, strerror(errno));
-            }
-            backup = dup(0);
-            dup2(fd, 0);
-            close(fd);
+        backup = dup(STDOUT_FILENO);
+        dup2(fd, STDOUT_FILENO);
+        close(fd);
+    }
+    if (out2) {
+        fd = open(str2, O_APPEND, 0744);
+        if (fd < 0){
+            printf("errno %d error: %s\n", errno, strerror(errno));
         }
+        backup = dup(0);
+        dup2(fd, 0);
+        close(fd);
     }
 }
 
