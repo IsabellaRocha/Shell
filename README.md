@@ -1,10 +1,10 @@
 Shell assignment by Isabella Rocha and Claire Tempelman
 
 Our shell implements:
-Basic commands using execvp
-Reading multiple lines separated by ;
-Basic redirection using < > and >>.
-Basic pipes using popen().
+- Basic commands using execvp
+- Reading multiple lines separated by ;
+- Basic redirection using < > and >>.
+- Basic pipes using popen().
 
 Features we were unsuccessful at implementing:
 Pressing up arrow for history.
