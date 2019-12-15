@@ -89,6 +89,7 @@ Inputs: char** args -> Array of arguments
 If > < or >> is present in args, the stdout and stdin are moved in the file table
 Does not return anything, only modifies the file table
 */
+
 void redirect(char ** args) {
     int fd;
     int c = 0;
@@ -124,23 +125,25 @@ void redirect(char ** args) {
         dup2(fd, STDIN_FILENO);
         close(fd);
     }
-    if (output) {
-        fd = open(str2, O_CREAT|O_WRONLY, 0744);
-        if (fd < 0){
-            printf("errno %d error: %s\n", errno, strerror(errno));
+    if (output2 || output) {
+        if (output2) {
+            fd = open(str2, O_WRONLY|O_APPEND, 0744);
+            if (fd < 0){
+                printf("errno %d error: %s\n", errno, strerror(errno));
+            }
+            backup = dup(STDOUT_FILENO);
+            dup2(fd, STDOUT_FILENO);
+            close(fd);
         }
-        backup = dup(STDOUT_FILENO);
-        dup2(fd, STDOUT_FILENO);
-        close(fd);
-    }
-    if (output2) {
-        fd = open(str2, O_APPEND, 0744);
-        if (fd < 0){
-            printf("errno %d error: %s\n", errno, strerror(errno));
+        else { //To make sure this only runs when >> isn't present because output will still be true if >> is present
+            fd = open(str2, O_CREAT|O_WRONLY, 0744);
+            if (fd < 0){
+                printf("errno %d error: %s\n", errno, strerror(errno));
+            }
+            backup = dup(STDOUT_FILENO);
+            dup2(fd, STDOUT_FILENO);
+            close(fd);
         }
-        backup = dup(0);
-        dup2(fd, 0);
-        close(fd);
     }
 }
 

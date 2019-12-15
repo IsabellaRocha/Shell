@@ -3,7 +3,7 @@
 int main() {
     char line[50];
     while (strcmp(line, "exit") != 0) {
-        printf("$ ");
+        printf("\n$ ");
         char** args;
         fgets(line, 50, stdin);
         char * checker;
