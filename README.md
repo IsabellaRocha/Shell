@@ -22,7 +22,7 @@ shell.c - handles execution.
       Inputs: char * line -> The input string which we are parsing over
       char * delimiter -> The string of characters we are looking for in line
       Every time a delimiter is found in line, a new token is created and added to the array of arguments
-      This function returns an arry of arguments
+      This function returns an array of arguments
 
     char * removeSpace()
       Inputs: char * line -> The input string in which we are removing the spaces from
