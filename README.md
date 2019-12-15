@@ -1,4 +1,4 @@
-#Shell assignment by Isabella Rocha and Claire Tempelman
+# Shell assignment by Isabella Rocha and Claire Tempelman
 
 Our shell implements:
 - Basic commands using execvp
