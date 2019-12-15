@@ -10,7 +10,7 @@ This function returns an arry of arguments
 */
 char ** parse_args( char * line, char * delimiter ){
     char * parse = removeSpace(line);
-    char ** args = malloc(10 * sizeof(char *));
+    char ** args = malloc(50 * sizeof(char *));
     int c = 0;
     char * token;
     while (parse != NULL){
