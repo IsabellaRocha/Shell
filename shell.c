@@ -94,28 +94,28 @@ void redirect(char ** args) {
     int c = 0;
     char str1[50];
     char str2[50]; //In case there's > and < in the same line
-    bool in = false;
-    bool out = false;
-    bool out2 = false;
+    bool input = false;
+    bool output = false;
+    bool output2 = false;
     int backup = 0;
     for (; args[c] != NULL; c++){
         if (strcmp(args[c], ">") == 0){
             args[c] = NULL;
             strcpy(str2, args[c + 1]);
-            out = true;
+            output = true;
         }
         else if (strcmp(args[c], "<") == 0){ //Need else or else you're checking against null
             args[c] = NULL;
             strcpy(str1, args[c + 1]);
-            in = true;
+            input = true;
         }
         else if (strcmp(args[c], ">>") == 0){
             args[c] = NULL;
             strcpy(str2, args[c + 1]);
-            out2 = true;
+            output2 = true;
         }
     }
-    if (in) {
+    if (input) {
         fd = open(str1, O_RDONLY, 0444);
         if (fd < 0){
             printf("errno %d error: %s\n", errno, strerror(errno));
@@ -124,7 +124,7 @@ void redirect(char ** args) {
         dup2(fd, STDIN_FILENO);
         close(fd);
     }
-    if (out) {
+    if (output) {
         fd = open(str2, O_CREAT|O_WRONLY, 0744);
         if (fd < 0){
             printf("errno %d error: %s\n", errno, strerror(errno));
@@ -133,7 +133,7 @@ void redirect(char ** args) {
         dup2(fd, STDOUT_FILENO);
         close(fd);
     }
-    if (out2) {
+    if (output2) {
         fd = open(str2, O_APPEND, 0744);
         if (fd < 0){
             printf("errno %d error: %s\n", errno, strerror(errno));
