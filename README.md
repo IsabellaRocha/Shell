@@ -48,3 +48,11 @@ shell.c - handles execution.
       Inputs: char** args -> Array of arguments
       Checks if cd appears to call cd, then forks to a child process and calls redirect in case redirection is needed, and finally uses execvp to run the arguments in args
       Does not return anything, simply executes the commands
+
+Every function header:
+char ** parse_args( char * line, char * delimiter );
+void cd(char * path);
+void execute(char** args);
+void redirect(char** args);
+void pip(char ** args);
+char * removeSpace(char * line);
